@@ -1,0 +1,196 @@
+.container {
+    max-width: 90%;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    color: #333;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .filters input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .kpis {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .kpi {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .kpi h2 {
+    font-size: 22px;
+    margin: 0;
+    color: #007bff;
+  }
+
+  .kpi p {
+    font-size: 16px;
+    color: #777;
+    margin: 5px 0 0;
+  }
+
+  .charts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+  }
+
+  .chart-container {
+    flex: 1 1 calc(33.333% - 20px);
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  canvas {
+    width: 100%;
+    height: 250px;
+    background-color: white !important;
+  }
+
+  .comments {
+    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .comments h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .comments table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .comments table th, .comments table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .export-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .export-btn:hover {
+    background-color: #0056b3;
+  }
+
+
+   /* Nuevos estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .kpis {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .kpi {
+    flex: 1 1 100%; /* Cada KPI ocupará toda la fila en móviles */
+    text-align: left;
+  }
+
+  .charts {
+    grid-template-columns: 1fr; /* Gráficas en una sola columna */
+  }
+
+  .chart-container {
+    padding: 10px;
+  }
+
+  .comments {
+    padding: 10px;
+  }
+
+  .comments h3 {
+    font-size: 18px;
+  }
+
+  .comments table th, .comments table td {
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .export-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filters input, .filters button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters{
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .kpi h2 {
+    font-size: 18px;
+  }
+  .kpi {
+    flex: 1 1 45%; /* Cada KPI ocupará toda la fila en móviles */
+    text-align: center;
+
+  }
+  .kpi p {
+    font-size: 14px;
+  }
+
+  canvas {
+    height: 200px; /* Reducir la altura de las gráficas en pantallas muy pequeñas */
+  }
+}

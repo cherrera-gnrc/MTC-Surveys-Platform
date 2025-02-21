@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mexico Technology Center Satisfaction Survey</title>
+    <link href="https://cdn.jsdelivr.net/npm/@mdbootstrap/mdb/css/mdb.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/customer_survey.css">
+    
+</head>
+<body>
+
+<!-- Navbar -->
+    <nav class="sticky-top" id="navbar-blue">
+        <div style="text-align: center; margin-bottom: 0.5%;">
+           <img src="../img/generac-logo-white.webp" style="width: 150px;" alt="logo" class="logo">
+        </div>
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <span id="progress"></span>
+        </div>
+
+    </nav>
+
+
+    <div class="container">
+        <h1>Mexico Technology Center Satisfaction Survey</h1>
+        <p>Thank you for taking the time to complete this survey. Your feedback is invaluable and will help us continuously improve our services. Please respond to each question based on your recent project experience with the Mexico Technology Center. This survey should take no more than 5 minutes to complete.</p>
+        <div style="background-color: #f6f6f6; border-radius: 0.5rem; padding: 1%;">
+            <p><b>Project Information</b></p>
+            <p id="projectName"><!-- Name here --></p>
+            <p id="projectDiscipline"><!-- Area here --></p>
+            <p id="projectFinishDate"><!-- Finish date here --></p>
+        </div>
+        <form action="#" method="POST">
+         
+            <!-- Question 1 -->
+        <div class="question">
+            <label for="satisfaction">1. Overall Satisfaction. How satisfied are you with the overall service provided by the Mexico Technology Center?</label>
+            <div class="btn-group">
+                <input type="radio" id="satisfaction5" name="satisfaction" value="Very Dissatisfied" onclick="updateProgress()">
+                <label for="satisfaction5">Very Dissatisfied</label>
+                <input type="radio" id="satisfaction4" name="satisfaction" value="Dissatisfied" onclick="updateProgress()">
+                <label for="satisfaction4">Dissatisfied</label>
+                <input type="radio" id="satisfaction3" name="satisfaction" value="Neutral" onclick="updateProgress()">
+                <label for="satisfaction3">Neutral</label>
+                <input type="radio" id="satisfaction2" name="satisfaction" value="Satisfied" onclick="updateProgress()">
+                <label for="satisfaction2">Satisfied</label>
+                <input type="radio" id="satisfaction1" name="satisfaction" value="Very Satisfied" onclick="updateProgress()">
+                <label for="satisfaction1">Very Satisfied</label>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question">
+            <label for="workQuality">2. Quality of Work. How would you rate the quality of the work delivered?</label>
+            <div class="btn-group">
+                <input type="radio" id="workQuality5" name="workQuality" value="Very Poor" onclick="updateProgress()">
+                <label for="workQuality5">Very Poor</label>
+                <input type="radio" id="workQuality4" name="workQuality" value="Poor" onclick="updateProgress()">
+                <label for="workQuality4">Poor</label>
+                <input type="radio" id="workQuality3" name="workQuality" value="Fair" onclick="updateProgress()">
+                <label for="workQuality3">Fair</label>
+                <input type="radio" id="workQuality2" name="workQuality" value="Good" onclick="updateProgress()">
+                <label for="workQuality2">Good</label>
+                <input type="radio" id="workQuality1" name="workQuality" value="Excellent" onclick="updateProgress()">
+                <label for="workQuality1">Excellent</label>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question">
+            <label for="timeliness">3. Timeliness. How satisfied are you with the timeliness of project delivery?</label>
+            <div class="btn-group">
+                <input type="radio" id="timeliness5" name="timeliness" value="Very Dissatisfied" onclick="updateProgress()">
+                <label for="timeliness5">Very Dissatisfied</label>
+                <input type="radio" id="timeliness4" name="timeliness" value="Dissatisfied" onclick="updateProgress()">
+                <label for="timeliness4">Dissatisfied</label>
+                <input type="radio" id="timeliness3" name="timeliness" value="Neutral" onclick="updateProgress()">
+                <label for="timeliness3">Neutral</label>
+                <input type="radio" id="timeliness2" name="timeliness" value="Satisfied" onclick="updateProgress()">
+                <label for="timeliness2">Satisfied</label>
+                <input type="radio" id="timeliness1" name="timeliness" value="Very Satisfied" onclick="updateProgress()">
+                <label for="timeliness1">Very Satisfied</label>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question">
+            <label for="communication">4. Communication. How effective was communication throughout the project?</label>
+            <div class="btn-group">
+                <input type="radio" id="communication5" name="communication" value="Very Ineffective" onclick="updateProgress()">
+                <label for="communication5">Very Ineffective</label>
+                <input type="radio" id="communication4" name="communication" value="Ineffective" onclick="updateProgress()">
+                <label for="communication4">Ineffective</label>
+                <input type="radio" id="communication3" name="communication" value="Neutral" onclick="updateProgress()">
+                <label for="communication3">Neutral</label>
+                <input type="radio" id="communication2" name="communication" value="Effective" onclick="updateProgress()">
+                <label for="communication2">Effective</label>
+                <input type="radio" id="communication1" name="communication" value="Very Effective" onclick="updateProgress()">
+                <label for="communication1">Very Effective</label>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question">
+            <label for="responsiveness">5. Responsiveness. How would you rate the responsiveness to your requests and questions?</label>
+            <div class="btn-group">
+                <input type="radio" id="responsiveness5" name="responsiveness" value="Very Poor" onclick="updateProgress()">
+                <label for="responsiveness5">Very Poor</label>
+                <input type="radio" id="responsiveness4" name="responsiveness" value="Poor" onclick="updateProgress()">
+                <label for="responsiveness4">Poor</label>
+                <input type="radio" id="responsiveness3" name="responsiveness" value="Fair" onclick="updateProgress()">
+                <label for="responsiveness3">Fair</label>
+                <input type="radio" id="responsiveness2" name="responsiveness" value="Good" onclick="updateProgress()">
+                <label for="responsiveness2">Good</label>
+                <input type="radio" id="responsiveness1" name="responsiveness" value="Excellent" onclick="updateProgress()">
+                <label for="responsiveness1">Excellent</label>
+            </div>
+        </div>
+        <!-- Pregunta 6 -->
+        <div class="question">
+            <label for="technicalExpertise">6. Technical Expertise. How satisfied are you with the technical expertise of the team?</label>
+            <div class="btn-group">
+                <input type="radio" id="technicalExpertise5" name="technicalExpertise" value="Very Dissatisfied" onclick="updateProgress()">
+                <label for="technicalExpertise5">Very Dissatisfied</label>
+                <input type="radio" id="technicalExpertise4" name="technicalExpertise" value="Dissatisfied" onclick="updateProgress()">
+                <label for="technicalExpertise4">Dissatisfied</label>
+                <input type="radio" id="technicalExpertise3" name="technicalExpertise" value="Neutral" onclick="updateProgress()">
+                <label for="technicalExpertise3">Neutral</label>
+                <input type="radio" id="technicalExpertise2" name="technicalExpertise" value="Satisfied" onclick="updateProgress()">
+                <label for="technicalExpertise2">Satisfied</label>
+                <input type="radio" id="technicalExpertise1" name="technicalExpertise" value="Very Satisfied" onclick="updateProgress()">
+                <label for="technicalExpertise1">Very Satisfied</label>
+            </div>
+        </div>
+
+        <!-- Pregunta 7 -->
+        <div class="question">
+            <label for="problemSolving">7. Problem-solving. How well did the team handle any issues or challenges that arose during the project?</label>
+            <div class="btn-group">
+                <input type="radio" id="problemSolving5" name="problemSolving" value="Very Poorly" onclick="updateProgress()">
+                <label for="problemSolving5">Very Poorly</label>
+                <input type="radio" id="problemSolving4" name="problemSolving" value="Poorly" onclick="updateProgress()">
+                <label for="problemSolving4">Poorly</label>
+                <input type="radio" id="problemSolving3" name="problemSolving" value="Neutral" onclick="updateProgress()">
+                <label for="problemSolving3">Neutral</label>
+                <input type="radio" id="problemSolving2" name="problemSolving" value="Well" onclick="updateProgress()">
+                <label for="problemSolving2">Well</label>
+                <input type="radio" id="problemSolving1" name="problemSolving" value="Very Well" onclick="updateProgress()">
+                <label for="problemSolving1">Very Well</label>
+            </div>
+        </div>
+        <!-- Question 8 -->
+        <div class="question">
+            <label for="recommendation">8. Change Management. How satisfied are you with the management and communication of changes during the project?</label>
+            <div class="btn-group">
+                <input type="radio" id="recommendation5" name="recommendation" value="Very Dissatisfied" onclick="updateProgress()">
+                <label for="recommendation5">Very Dissatisfied</label>
+                <input type="radio" id="recommendation4" name="recommendation" value="Dissatisfied" onclick="updateProgress()">
+                <label for="recommendation4">Dissatisfied</label>
+                <input type="radio" id="recommendation3" name="recommendation" value="Neutral" onclick="updateProgress()">
+                <label for="recommendation3">Neutral</label>
+                <input type="radio" id="recommendation2" name="recommendation" value="Satisfied" onclick="updateProgress()">
+                <label for="recommendation2">Satisfied</label>
+                <input type="radio" id="recommendation1" name="recommendation" value="Very Satisfied" onclick="updateProgress()">
+                <label for="recommendation1">Very Satisfied</label>
+            </div>
+        </div>
+
+        <!-- Preguntas abiertas -->
+        <!-- Pregunta 9 -->
+        <div class="question">
+            <label for="improvementSuggestions">9. Improvement Suggestions. What specific suggestions do you have for improving our services?</label>
+            <textarea id="improvementSuggestions" name="improvementSuggestions" rows="3" class="form-control"></textarea>
+        </div>
+
+        <!-- Pregunta 10 -->
+        <div class="question">
+            <label for="openFeedback">10. Open Feedback. Any additional comments or feedback?</label>
+            <textarea id="openFeedback" name="openFeedback" rows="3" class="form-control"></textarea>
+        </div>
+
+            <!-- Question 11 -->
+        <div class="question">
+            <label for="recommendationLikelihood1">11. Recommendation Likelihood. On a scale of 1 to 10, how likely are you to recommend the Mexico Technology Center’s services to others?</label>
+            <div class="btn-group">
+                <input type="radio" id="recommendationLikelihood1" name="recommendationLikelihood" value="1" onclick="updateProgress()">
+                <label for="recommendationLikelihood1">1</label>
+                <input type="radio" id="recommendationLikelihood2" name="recommendationLikelihood" value="2" onclick="updateProgress()">
+                <label for="recommendationLikelihood2">2</label>
+                <input type="radio" id="recommendationLikelihood3" name="recommendationLikelihood" value="3" onclick="updateProgress()">
+                <label for="recommendationLikelihood3">3</label>
+                <input type="radio" id="recommendationLikelihood4" name="recommendationLikelihood" value="4" onclick="updateProgress()">
+                <label for="recommendationLikelihood4">4</label>
+                <input type="radio" id="recommendationLikelihood5" name="recommendationLikelihood" value="5" onclick="updateProgress()">
+                <label for="recommendationLikelihood5">5</label>
+                <input type="radio" id="recommendationLikelihood6" name="recommendationLikelihood" value="6" onclick="updateProgress()">
+                <label for="recommendationLikelihood6">6</label>
+                <input type="radio" id="recommendationLikelihood7" name="recommendationLikelihood" value="7" onclick="updateProgress()">
+                <label for="recommendationLikelihood7">7</label>
+                <input type="radio" id="recommendationLikelihood8" name="recommendationLikelihood" value="8" onclick="updateProgress()">
+                <label for="recommendationLikelihood8">8</label>
+                <input type="radio" id="recommendationLikelihood9" name="recommendationLikelihood" value="9" onclick="updateProgress()">
+                <label for="recommendationLikelihood9">9</label>
+                <input type="radio" id="recommendationLikelihood10" name="recommendationLikelihood" value="10" onclick="updateProgress()">
+                <label for="recommendationLikelihood10">10</label>
+            </div>
+        </div>
+
+            <!-- Submit Button -->
+            <div class="button">
+                <button type="submit">Submit Survey</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Función para obtener parámetros de la URL
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(param);
+        }
+    
+        // Función para obtener datos de los proyectos
+        async function fetchProjectData() {
+          const endpoint = "https://getallprojects-dcwslcbviq-uc.a.run.app";
+    
+          try {
+            const response = await fetch(endpoint);
+            if (!response.ok) {
+              throw new Error(`Error al obtener los datos: ${response.statusText}`);
+            }
+            return await response.json();
+          } catch (error) {
+            console.error("Error en la solicitud:", error);
+            return [];
+          }
+        }
+    
+        // Función principal para asignar datos al HTML
+        async function populateProjectDetails() {
+          // 1. Obtener el nombre del proyecto desde la URL
+          const projectName = getQueryParam("name");
+          if (!projectName) {
+            document.getElementById("projectName").textContent = "Non specified name.";
+            return;
+          }
+    
+          // 2. Obtener los datos de los proyectos
+          const projects = await fetchProjectData();
+    
+          // 3. Buscar el proyecto por nombre
+          const project = projects.find((p) => p.name === projectName);
+          if (!project) {
+            document.getElementById("projectName").textContent = `There were no info found for the project: ${projectName}`;
+            return;
+          }
+
+          const formattedFinishDate = project.finish_date.slice(0, -15);
+    
+          // 5. Asignar los datos al HTML
+          document.getElementById("projectName").textContent = `Name: ${project.name}`;
+          document.getElementById("projectDiscipline").textContent = `MTC Area: ${project.discipline}`;
+          document.getElementById("projectFinishDate").textContent = `Finish date: ${formattedFinishDate}`;
+        }
+    
+        // Ejecutar la función principal
+        populateProjectDetails();
+    </script>
+
+<script>
+    let totalQuestions = 11;  // Total de preguntas, incluyendo 9 y 10
+    let answeredQuestions = 0; // Contador de preguntas respondidas
+    let startTime = Date.now(); // Almacenamos el tiempo cuando la página se carga
+
+    // Función para obtener parámetros de la URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Función para obtener los datos del proyecto
+    async function fetchProjectData() {
+        const endpoint = "https://getallprojects-dcwslcbviq-uc.a.run.app";
+    
+        try {
+            const response = await fetch(endpoint);
+            if (!response.ok) {
+                throw new Error(`Error al obtener los datos: ${response.statusText}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
+            return [];
+        }
+    }
+
+    // Función para obtener el nombre del proyecto y los detalles del mismo
+    async function populateProjectDetails() {
+        // 1. Obtener el nombre del proyecto desde la URL
+        const projectName = getQueryParam("name");
+        if (!projectName) {
+            document.getElementById("projectName").textContent = "Non specified name.";
+            return;
+        }
+
+        // 2. Obtener los datos de los proyectos
+        const projects = await fetchProjectData();
+
+        // 3. Buscar el proyecto por nombre
+        const project = projects.find((p) => p.name === projectName);
+        if (!project) {
+            document.getElementById("projectName").textContent = `There were no info found for the project: ${projectName}`;
+            return;
+        }
+
+        const formattedFinishDate = project.finish_date.slice(0, -15);
+
+        // 5. Asignar los datos al HTML
+        document.getElementById("projectName").textContent = `Name: ${project.name}`;
+        document.getElementById("projectDiscipline").textContent = `MTC Area: ${project.discipline}`;
+        document.getElementById("projectFinishDate").textContent = `Finish date: ${formattedFinishDate}`;
+    }
+
+    // Ejecutar la función principal
+    populateProjectDetails();
+
+    // Función para actualizar el progreso
+    function updateProgress() {
+        // Contamos las respuestas seleccionadas
+        answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+        let progress = (answeredQuestions / (totalQuestions - 2)) * 100;  // Excluyendo las preguntas 9 y 10
+        document.getElementById("progress").style.width = progress + "%";
+    }
+
+    // Función para recolectar respuestas y enviar el formulario
+    async function submitSurvey(event) {
+        event.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
+        const submitButton = document.querySelector('button[type="submit"]');
+        // Añadir el loader
+        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...`;
+        submitButton.disabled = true;
+  
+        // Obtenemos las respuestas de las preguntas
+        const responses = {
+            name: getQueryParam("name") || "", // Obtenemos el nombre del proyecto de la URL
+            q1: document.querySelector('input[name="satisfaction"]:checked')?.value || "",
+            q2: document.querySelector('input[name="workQuality"]:checked')?.value || "",
+            q3: document.querySelector('input[name="timeliness"]:checked')?.value || "",
+            q4: document.querySelector('input[name="communication"]:checked')?.value || "",
+            q5: document.querySelector('input[name="responsiveness"]:checked')?.value || "",
+            q6: document.querySelector('input[name="technicalExpertise"]:checked')?.value || "",
+            q7: document.querySelector('input[name="problemSolving"]:checked')?.value || "",
+            q8: document.querySelector('input[name="recommendation"]:checked')?.value || "",
+            q9: document.getElementById("improvementSuggestions").value || "No comment registered",  // Si no hay texto, asignamos vacío
+            q10: document.getElementById("openFeedback").value || "No comment registered",  // Si no hay texto, asignamos vacío
+            q11: document.querySelector('input[name="recommendationLikelihood"]:checked')?.value || "",
+            discipline: document.getElementById("projectDiscipline").textContent.split(":")[1].trim(),
+
+        };
+
+        // Validación de que todas las preguntas, excepto la 9 y 10, estén respondidas
+        for (let i = 1; i <= 8; i++) {
+            if (!responses[`q${i}`]) {
+                alert(`Please answer question ${i}.`);
+                return; // Detenemos la ejecución si alguna pregunta no está respondida
+            }
+        }
+
+        // Calculamos la duración en minutos
+        const endTime = Date.now();
+        const duration = (endTime - startTime) / 60000; // Duración en minutos
+
+        // Añadimos la duración al objeto de respuestas
+        responses.time_duration = duration.toFixed(2); // Redondeamos a 2 decimales
+
+        // Imprimimos el objeto JSON en la consola
+        console.log("JSON para enviar:", JSON.stringify(responses));
+
+        // Enviar las respuestas al endpoint con CORS habilitado en el servidor
+        const endpoint = "https://addcustomerresponse-dcwslcbviq-uc.a.run.app";
+
+        try {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(responses),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error al enviar los datos: ${response.statusText}`);
+            }
+
+            // Redirigir después de enviar los datos
+            window.location.href = "https://mtc-surveys-platform.web.app/assets/thanks.html";
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
+            alert("There was an error submitting the survey. Please try again.");
+        }finally {
+        // Restablecer el botón
+        submitButton.innerHTML = "Submit Survey";
+        submitButton.disabled = false;
+      }
+    }
+
+    // Asignamos el evento al botón de envío
+    document.querySelector('button[type="submit"]').addEventListener("click", submitSurvey);
+</script>
+
+
+  
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzYGVjjG0vOecXoH_gy3x03uIXSQb8-Do",
+      authDomain: "mtc-surveys-platform.firebaseapp.com",
+      databaseURL: "https://mtc-surveys-platform-default-rtdb.firebaseio.com",
+      projectId: "mtc-surveys-platform",
+      storageBucket: "mtc-surveys-platform.firebasestorage.app",
+      messagingSenderId: "574347185932",
+      appId: "1:574347185932:web:185bfbc030b6a02d494329",
+      measurementId: "G-64XLLLDTBG"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/@mdbootstrap/mdb/js/mdb.min.js"></script>
+</body>
+</html>

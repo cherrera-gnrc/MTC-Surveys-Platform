@@ -1,0 +1,38 @@
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #fccb90;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to left, #ee7724, #ff6600, #e2a36c, #ffffff);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to left, rgb(249, 159, 85) 16%, rgba(255,148,59,1) 31%, rgba(255,104,0,1) 59%, rgba(255,95,0,0.9) 99%);
+    }
+    
+ 
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }
+    .logo-login{
+        width: 30%;
+    }
+
+    .btn.login{
+        background-color: #ff6600;
+        color: #ffffff;
+    }
+
+    .login-title{
+        
+        margin-top: 10%;
+        margin-bottom: 5%;
+    }
+   

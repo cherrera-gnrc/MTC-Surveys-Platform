@@ -1,0 +1,226 @@
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.body{
+    font-family: 'Poppins', sans-serif;
+}
+.title {
+    margin: 1%;
+}
+
+.form-select.lan {
+    background-color: #F36C21;
+    color: white;
+    text-align: right;
+    width: auto;
+}
+
+.main-container {
+    margin: 1%;
+}
+
+.card.gray {
+    background-color: rgb(234, 236, 236);
+    padding: 0;
+}
+
+.col-12 {
+    background-color: #ffffff;
+}
+
+.col-6 {
+    background-color: #ffffff;
+}
+
+.container {
+    padding: 0;
+}
+
+.input-column, .button-column, .logo-column {
+    flex: 1;
+}
+
+
+.button-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-column .status {
+    margin-right: 10px;
+}
+
+.logo-column img {
+    margin-top: 10px;
+    width: 100px;
+}
+
+/* Ajustar la altura máxima de la card principal y agregar padding */
+.card {
+    max-height: 100vh;
+    margin: 0.5%;
+}
+
+.table-responsive {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.table-responsive.group{
+    max-height: 85vh;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+.scrollable-cards {
+    max-height: 10vh; /* Ajustar altura máxima de las tarjetas scrollables */
+    overflow-y: auto; /* Habilitar scroll vertical */
+    margin-top: 10px; /* Espacio entre las tarjetas y otros elementos */
+}
+.col-12.col-md-6.sc-cards{
+    max-height: 60vh;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.card-body.main {
+    flex: 1;
+    padding: 0%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+.card.report{
+    height: 50vh;
+      
+}
+.btn.btn-primary.report {
+    width: 100%;
+    height: 10vh;
+    background-color: #00263D;
+}
+
+.btn.btn-success.connection {
+    width: 100%;
+    height: 10vh;
+    background-color: #87878B;
+}
+
+.circle {
+    background-color: #00aa2b;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.status {
+    margin: 5%;
+}
+
+.link-card {
+    text-decoration: dashed;
+}
+
+.card-body.email{
+    height: 65vh;
+}
+
+.text-editor{
+    height: 45vh;
+}
+
+.logout-button{
+    display: none; 
+    background-color: transparent; 
+    border: none; 
+    font-size: 150%; 
+    width: 5%;
+    color: black;
+}
+/* Media query para pantallas pequeñas */
+@media (max-width: 576px) {
+    .input-column, .button-column, .logo-column {
+        flex: 1; /* Asegurar que ocupen el 100% del ancho */
+        width: 100%;
+        margin-bottom: 10px; /* Espacio entre columnas */
+    }
+    
+    .button-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card.main-border{
+        height: 100%; 
+        padding-left: 1.2%;
+        padding-right: 1.2%;
+    }
+    .card-body.carousel{
+        height: 50vh;
+    
+    }
+    .table.table-bordered.table-responsive.carousel{
+        max-height: 20px;
+        overflow-y: auto;
+        margin-top: 5px;
+    }
+
+    .card-body.email{
+        height: 60vh;
+    }
+    
+    .text-editor{
+        height: 27vh;
+    }
+}
+
+.block-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.nav-item.locked {
+    pointer-events: none;
+    color: gray;
+    position: relative;
+}
+
+.nav-item.locked::after {
+    content: "\f023"; /* Ícono de candado */
+    font-family: "Boxicons";
+    font-size: 1rem;
+    margin-left: 5px;
+    color: gray;
+}
+

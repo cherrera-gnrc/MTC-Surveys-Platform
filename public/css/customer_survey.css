@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #eeeeee;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #00263e;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        header img {
+            width: 150px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 120%;
+            font-weight: bold;
+            color: #000000;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+        }
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: #ff6600;
+            width: 0;
+            border-radius: 10px;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .btn-body-tertiary {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            width: calc(20% - 10px);
+            text-align: center;
+            cursor: pointer;
+        }
+        .btn-body-tertiary.active {
+            background-color: #00263e;
+            color: white;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: justify;
+        }
+        .question textarea {
+            width: 100%;
+            padding: 10px;
+            height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        .question textarea:focus {
+            outline: none;
+            border-color: #00263e;
+        }
+        .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #00263e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #1d4b6f;
+        }
+        .btn-group label {
+            cursor: pointer;
+            font-weight: normal; 
+        }
+        .question input[type="radio"] {
+            display: none;
+        }
+        .question input[type="radio"]:checked + label {
+            background-color: #00263e;
+            color: white;
+        }
+        .question label {
+            display: block;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #navbar-blue{
+            background-color: #00263e; 
+            height: 10vh; 
+            padding: 1%;
+        }
+        #navbar-blue2{
+            background-color: #00263e; 
+            height: 10vh; 
+            padding: 1%;
+        }
+
+        .fixed-buttons {
+            position: fixed;
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 0 20px; 
+        } 
+/* Media query para pantallas pequeñas */
+@media (max-width: 440px) {
+    #navbar-blue{
+        background-color: #00263e; 
+        height: 17vh; 
+        padding: 1%;
+    }
+    #navbar-blue2{
+        background-color: #00263e; 
+        height: 7vh; 
+        padding: 1%;
+    }
+    .container {
+        max-width: 90%;
+        margin: 20px auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo{
+        margin-top: 10px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        height: 8px;
+        margin-top: 20px;
+    }
+    .btn-group { display: flex; justify-content: center; align-items: center; width: 100%; flex-wrap: wrap; } .btn-group label { cursor: pointer; font-weight: normal; font-size: xx-small; padding: 2%; margin: 0.5%; height: 100%; background-color: #f7f7f7; border-radius: 0.1rem; text-align: center; flex: 1 1 auto; box-sizing: border-box; }
+    
+    
+
+    .fixed-buttons {
+        position: fixed;
+        top: 93%; 
+        transform: translateY(-93%); 
+        width: 100%; 
+        display: flex; 
+        justify-content: space-between; 
+        padding: 0 20px;
+        z-index: 6;
+    } 
+}
+
+
