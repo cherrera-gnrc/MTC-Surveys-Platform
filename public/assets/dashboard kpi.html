@@ -55,17 +55,17 @@
     <div class="card-header" >
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="dashboard.html">Surveys</a>
+          <a class="nav-link" href="dashboard.html">Surveys</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="dashboard kpi.html">KPIs</a>
+          <a class="nav-link active" href="dashboard kpi.html">KPIs</a>
         </li>
       </ul>
     </div>
 
         <div class="container">
           <div class="header">
-            <h1>Customers Survey Dashboard</h1>
+            <h1>MTC KPIs Dashboard</h1>
           </div>
 
           <div class="filters">
@@ -86,46 +86,73 @@
           <div class="kpis">
 
             <div class="kpi">
-              <i class='bx bx-clipboard' style="font-size: x-large;"></i> 
-              <h2 id="total-surveys">0</h2>
-              <p>Total Surveys</p>
+              <i class='bx bxs-like' style="font-size: x-large;"></i>
+              <h2 id="project-quality">0</h2>
+              <p>Project Quality</p>
             </div>
 
             <div class="kpi">
-              <i class='bx bx-time-five' style="font-size: x-large;"></i>
-              <h2 id="avg-duration">0</h2>
-              <p>Avg Duration</p>
+              <i class='bx bx-smile' style="font-size: x-large;"></i>
+              <h2 id="promoters">0%</h2>
+              <p>Promoters</p>
             </div>
+
+            <div class="kpi">
+              <i class='bx bx-smile' style="font-size: x-large;"></i>
+              <h2 id="neutrals">0%</h2>
+              <p>Neutrals</p>
+            </div>
+
+            <div class="kpi">
+              <i class='bx bx-sad' style="font-size: x-large;"></i>
+              <h2 id="detractors">0%</h2>
+              <p>Detractors</p>
+            </div>
+
+            <div class="kpi">
+              <h2 id="nps-score">0</h2> 
+              <div id="nps-icons" style="display: flex; justify-content: center; gap: 5px; margin-top: 10px;">
+                <!-- Íconos de personas se llenarán dinámicamente -->
+              </div>
+              <p>Net Promoter Score (NPS)</p>
+            </div>      
           </div>
 
-          
-          <div class="charts" id="chart-container">
-              <!-- Dynamically added charts -->
-          </div>  
 
-          <div class="comments">
-            <div class="row gx-3">
-              <div class="col-sm-6">
-                <h3>Improvement Suggestions</h3>
-                <table>
-                  <thead>
-                    <tr><th>Project</th><th>Improvement</th></tr>
-                  </thead>
-                  <tbody id="improvement-table-body"></tbody>
-                </table>
+          <!-- Sección de gráficos nuevos -->
+          <div class="charts" id="new-chart-container">
+            <!-- Gráfica de barras para calidad de proyectos -->
+            <div class="chart-container">
+                <canvas id="project-quality-chart"></canvas>
+            </div>
+            <!-- Gráfica de doughnut para NPS -->
+            <div class="chart-container">
+                <canvas id="nps-chart"></canvas>
+            </div>
+            <div class="chart-container">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <canvas id="timely-completion-chart" style="max-height: 200px;"></canvas>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 id="timely-completion" style="text-align: center;">0%</h5>
+                    <ul id="delayed-projects"></ul>
+                  </div>
+                </div>
               </div>
-
-              <div class="col-sm-6">
-                <h3>Open Feedback</h3>
-                <table>
-                  <thead>
-                    <tr><th>Project</th><th>Feedback</th></tr>
-                  </thead>
-                  <tbody id="feedback-table-body"></tbody>
-                </table>
-              </div>
+              
+            </div>
+            <div class="chart-container">
+              <h5 style="font-weight: bold; color: #646464;;">Customer Satisfaction</h5>
+              <h4 id="customer-satisfaction" style="text-align: center;">0%</h4>
+              <div id="stars" style="text-align: center;"></div>
+              <p id="satisfaction-goal" style="text-align: center;"></p>
             </div>
           </div>
+         
+        
+
 
           <a href="#" class="export-btn" id="export-pdf">Export to PDF</a>
         </div>
@@ -186,11 +213,13 @@
         ).toFixed(2);
 
         const promoters = responses.filter((r) => r.q11 >= 9).length;
+        const neutrals = responses.filter((r) => r.q11 > 6 && r.q11 < 9).length;
         const detractors = responses.filter((r) => r.q11 <= 6).length;
 
-        const totalValid = promoters + detractors;
+        const totalValid = promoters + detractors+ neutrals;
         const promoterPercentage = totalValid ? ((promoters / totalValid) * 100).toFixed(1) : 0;
         const detractorPercentage = totalValid ? ((detractors / totalValid) * 100).toFixed(1) : 0;
+        const neutralPercentage = totalValid ? ((neutrals / totalValid) * 100).toFixed(1) : 0;
         const nps = promoterPercentage - detractorPercentage;
 
         const totalProjects = projects.length;
@@ -198,81 +227,41 @@
         const projectsWithoutRevisions = totalProjects - projectsWithRevisions;
         const projectsWithoutRevisionsPercentage = (projectsWithoutRevisions / totalProjects) * 100;
 
-        document.getElementById('total-surveys').textContent = totalSurveys;
-        document.getElementById('avg-duration').textContent = `${avgDuration} mins`;
-       
+        document.getElementById('project-quality').textContent = `${projectsWithoutRevisionsPercentage.toFixed(1)}%`;
+        document.getElementById('promoters').textContent = `${promoterPercentage}%`;
+        document.getElementById('neutrals').textContent = `${neutralPercentage}%`;
+        document.getElementById('detractors').textContent = `${detractorPercentage}%`;
+        document.getElementById('nps-score').textContent = nps;
 
+        loadNPSIcons(promoterPercentage, detractorPercentage, neutralPercentage);
     }
 
-   
+    function loadNPSIcons(promoterPercentage, detractorPercentage, neutralPercentage) {
+    const iconContainer = document.getElementById('nps-icons');
+    iconContainer.innerHTML = '';
 
-    function loadCharts(responses) {
-        const chartContainer = document.getElementById('chart-container');
-        chartContainer.innerHTML = '';
+    const totalIcons = 10;
+    const promoterCount = Math.round((promoterPercentage / 100) * totalIcons);
+    const neutralCount = Math.round((neutralPercentage / 100) * totalIcons);
+    const detractorCount = Math.round((detractorPercentage / 100) * totalIcons);
 
-        Object.keys(questions).forEach((question, index) => {
-            const chartId = `chart-${index}`;
-            const chartDiv = document.createElement('div');
-            chartDiv.className = 'chart-container';
-            chartDiv.innerHTML = `<canvas id="${chartId}"></canvas>`;
-            chartContainer.appendChild(chartDiv);
+    for (let i = 0; i < totalIcons; i++) {
+        const icon = document.createElement('i');
+        icon.className = 'bx bx-male';
+        icon.style.fontSize = '24px';
 
-            const data = responses.reduce((acc, r) => {
-                acc[r[question]] = (acc[r[question]] || 0) + 1;
-                return acc;
-            }, {});
+        if (i < promoterCount) {
+            icon.style.color = 'green'; // Promoters (9-10)
+        } else if (i < promoterCount + neutralCount) {
+            icon.style.color = 'yellow'; // Neutrals (7-8)
+        } else {
+            icon.style.color = 'red'; // Detractors (1-6)
+        }
 
-            new Chart(document.getElementById(chartId), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(data),
-                    datasets: [{
-                        label: questions[question],
-                        data: Object.values(data),
-                        backgroundColor: ['#007bff', '#28a745', '#dc3545', '#ffc107', '#6c757d'],
-                        borderRadius: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // For uniform height
-                    plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: questions[question] , font: { family: "Poppins", weight: "bold", size: 18}, align: "start"}
-                    },
-                    scales: {
-                        x: { ticks: { font: { family: "Poppins" } } },
-                        y: { ticks: { font: { family: "Poppins" } } }
-                    }
-                }
-            });
-        });
+        iconContainer.appendChild(icon);
     }
+}
 
-    function loadComments(responses) {
-        const improvementTable = document.getElementById('improvement-table-body');
-        improvementTable.innerHTML = '';
-
-        const feedbackTable = document.getElementById('feedback-table-body');
-        feedbackTable.innerHTML = '';
-
-        responses.forEach(r => {
-            const improvement = r.q9.trim();
-            const feedback = r.q10.trim();
-
-            if (improvement) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${r.name}</td><td>${improvement}</td>`;
-                improvementTable.appendChild(row);
-            }
-
-            if (feedback) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${r.name}</td><td>${feedback}</td>`;
-                feedbackTable.appendChild(row);
-            }
-        });
-    }
 
     function setCanvasBackgroundWhite() {
         const canvases = document.querySelectorAll('canvas');
@@ -332,7 +321,23 @@
             }]
         };
 
-      
+        new Chart(document.getElementById("project-quality-chart"), {
+            type: "bar",
+            data: qualityData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: "Project Quality", font: { family: "Poppins", weight: "bold", size: 18}, align: "start"}
+                },
+                scales: {
+                    x: { ticks: { font: { family: "Poppins" } } },
+                    y: { ticks: { font: { family: "Poppins" } } }
+                }
+            }
+
+        });
 
         const promoters = responses.filter(r => r.q11 >= 9).length;
         const detractors = responses.filter(r => r.q11 <= 6).length;
@@ -345,6 +350,20 @@
                 backgroundColor: ["#28a745", "#ffc107", "#dc3545"]
             }]
         };
+
+        new Chart(document.getElementById("nps-chart"), {
+            type: "doughnut",
+            data: npsData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: "Net Promoter Score (NPS)" , font: { family: "Poppins", weight: "bold", size: 18}, align: "start"}
+                }
+            }
+
+        });
 
         const dates = projects.map(p => parseDate(p.finish_date));
         const dateCounts = dates.reduce((acc, date) => {
@@ -381,36 +400,121 @@
         allResponses = await fetchData();
         projects = await fetchData2();
         loadKPIs(allResponses, projects);
-        loadComments(allResponses);
-        loadCharts(allResponses);
         loadNewCharts(allResponses, projects);
     }
 
-    function filterData() {
-        const startDate = document.getElementById('start-date').value;
-        const endDate = document.getElementById('end-date').value;
-        const filteredResponses = filterResponses(allResponses, startDate, endDate);
-        const filteredProjects = filterResponses(projects, startDate, endDate);
 
-        loadKPIs(filteredResponses, filteredProjects);
-        loadComments(filteredResponses);
-        loadCharts(filteredResponses);
-        loadNewCharts(filteredResponses, filteredProjects);
-    }
-
-    function clearFilters() {
-        document.getElementById('start-date').value = '';
-        document.getElementById('end-date').value = '';
-        init();
-    }
-
-    document.getElementById('clear-filters-btn').addEventListener('click', clearFilters);
     document.getElementById('export-pdf').addEventListener('click', exportToPDF);
 
     init();
 </script>
 
+<script>
+async function fetchResponses() {
+  const res = await fetch('https://getallcustomerresponses-dcwslcbviq-uc.a.run.app');
+  return res.json();
+}
 
+async function fetchProjects() {
+  const res = await fetch('https://getallprojects-dcwslcbviq-uc.a.run.app');
+  return res.json();
+}
+
+function calculateCustomerSatisfaction(responses) {
+  const total = responses.length;
+  if (!total) return 0;
+
+  const avg = responses.reduce((sum, r) => sum + parseFloat(r.q11), 0) / total;
+  return (avg * 10).toFixed(1);
+}
+
+function displayStars(percentage) {
+  const fullStars = Math.floor(percentage / 20);
+  const halfStar = percentage % 20 >= 10 ? 1 : 0;
+  const emptyStars = 5 - fullStars - halfStar;
+
+  return '<i class="bx bxs-star" style="color: gold; font-size:100px;"></i>'.repeat(fullStars) +
+         '<i class="bx bxs-star-half" style="color: gold; font-size:100px;"></i>'.repeat(halfStar) +
+         '<i class="bx bx-star" style="color: gold; font-size:100px;"></i>'.repeat(emptyStars);
+}
+
+function calculateTimelyCompletion(projects) {
+  const total = projects.length;
+  const completedOnTime = projects.filter(p => p.on_time === "Yes").length;
+  return total ? ((completedOnTime / total) * 100).toFixed(1) : 0;
+}
+
+function getDelayedProjects(projects) {
+  return projects.filter(p => p.on_time === "No").slice(-4);
+}
+
+function updateDashboard(responses, projects) {
+  const satisfaction = calculateCustomerSatisfaction(responses);
+  document.getElementById('customer-satisfaction').textContent = `${satisfaction}%`;
+  document.getElementById('stars').innerHTML = displayStars(satisfaction);
+  document.getElementById('satisfaction-goal').textContent = satisfaction >= 70 ? "Above Goal" : "Below Goal";
+
+  const timelyCompletion = calculateTimelyCompletion(projects);
+  document.getElementById('timely-completion').textContent = `${timelyCompletion}%`;
+
+  const ctx = document.getElementById("timely-completion-chart").getContext("2d");
+  new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["On Time", "Delayed"],
+      datasets: [{
+        data: [timelyCompletion, 100 - timelyCompletion],
+        backgroundColor: ["#28a745", "#dc3545"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true, 
+      plugins: {
+        legend: { display: true },
+        title: {
+          display: true,
+          text: "Time",
+          font: { family: "Poppins", weight: "bold", size: 18 },
+          align: "start"
+        }
+      }
+    }
+  });
+
+  const delayedProjects = getDelayedProjects(projects);
+  document.getElementById('delayed-projects').innerHTML = delayedProjects.map(p => `<li>${p.name}</li>`).join("");
+}
+
+
+async function init() {
+  const responses = await fetchResponses();
+  const projects = await fetchProjects();
+  updateDashboard(responses, projects);
+}
+
+async function filterData() {
+  const startDate = new Date(document.getElementById('start-date').value);
+  const endDate = new Date(document.getElementById('end-date').value);
+
+  const responses = (await fetchResponses()).filter(r => {
+    const responseDate = new Date(r.created_at.split(",")[0].split("/").reverse().join("-"));
+    return (!isNaN(startDate) ? responseDate >= startDate : true) && 
+           (!isNaN(endDate) ? responseDate <= endDate : true);
+  });
+
+  const projects = (await fetchProjects()).filter(p => {
+    const projectDate = new Date(p.finish_date.split(",")[0].split("/").reverse().join("-"));
+    return (!isNaN(startDate) ? projectDate >= startDate : true) && 
+           (!isNaN(endDate) ? projectDate <= endDate : true);
+  });
+
+  updateDashboard(responses, projects);
+}
+
+init();
+
+</script>
 
   <!-- Firebase SDK-->
   <script type="module">

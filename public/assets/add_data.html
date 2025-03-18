@@ -38,7 +38,7 @@
           <a class="nav-link" href="dashboard.html">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="add_data.html">Add data</a>
+            <a class="nav-link" href="add_data.html">Add data</a>
       </li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
 
   <div class="main-container">
     <div class="container">
-        <h1>Projects</h1>
+        <h1>Add data</h1>
 
         <!-- Row start -->
         <div class="row gx-3">
@@ -56,7 +56,7 @@
               <!-- Card start -->
               <div class="card">
                 <div class="card-header">
-                  <div class="card-title">Add new project</div>
+                  <div class="card-title">Resource utilization</div>
                 </div>
                 <div class="card-body">
 
@@ -64,46 +64,22 @@
                   <div class="row gx-3">
                     <div class="col-xxl-12">
                       <div class="mb-3">
-                        <label class="form-label">Name *</label>
-                        <input type="text" class="form-control" id="inputPregunta" placeholder="Write the project name here">
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Discipline <span class="text-red">*</span></label>
-                        <select class="form-control" id="inputCategoria">
-                          <option value="Select a discipline">Select a discipline</option>
-                        </select>
+                        <label class="form-label">Billable hours *</label>
+                        <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of hours here">
                       </div>
 
                       <div class="mb-3">
-                        <label class="form-label">Project on time? <span class="text-red">*</span></label>
-                        <select class="form-control" id="inputOnTime">
-                          <option value="Select an option">Select an option</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
+                        <label class="form-label">Total hours worked *</label>
+                        <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of hours here">
                       </div>
-
-                      <div class="col-xxl-12">
-                        <div class="mb-3">
-                          <label class="form-label">Number of revisions *</label>
-                          <input type="text" class="form-control" id="revisions" placeholder="Write the number of revisions here">
-                        </div>
-                      </div>
-
-                      <div class="col-sm-6 col-12">
-                        <div class=" mb-3">
-                          <label class="form-label">Estimated Finish Date</label>
-                          <input type="date" id="fecha"class="form-control" placeholder="Selecciona la fecha">
-                        </div>
-                      </div>
+                    </div>
+                   
                   </div>
 
-                 
                   <!-- Row end -->
 
                   <!-- Form actions footer start -->
-                  <div class="form-actions-footer">
+                  <div class="form-actions-footer" style="display: flex; justify-content: flex-end;">
                     <button class="btn btn-success" id="submitPregunta">Submit</button>
                   </div>
                   <!-- Form actions footer end -->
@@ -112,133 +88,156 @@
               </div>
               <!-- Card end -->
               <br>
-              <div class="col-12">
-                <h1>Disciplines</h1>
-              </div>
-                <!-- Card start -->
-                <div class="card" style="max-height: 360px; overflow-y: auto;">
-                  <div class="card-header">
-                    <div class="card-title">Add new discipline</div>
-                  </div>
-                  <div class="card-body">
-
-                    <!-- Row start -->
-                    <div class="row gx-3">
-                      <div class="col-xxl-12">
-                        <div class="mb-3">
-                          <label class="form-label">Name *</label>
-                          <input type="text" class="form-control" id="inputDiscipline" placeholder="Write the discipline (area) name here">
-                        </div>
-                      </div>
-                    <!-- Row end -->
-
-                    <!-- Form actions footer start -->
-                    <div class="form-actions-footer">
-                      <button class="btn btn-success" id="submitDiscipline">Submit</button>
-                    </div>
-                    <!-- Form actions footer end -->
-
-                  </div>
-                </div>
-                <!-- Card end -->
-
-                <div class="card-body">
-                  <!-- Row start -->
-                  <div class="row gx-3" >
-                        <div class="card-body">
-                          <div class="disciplines-container">
-                              <!-- Las tarjetas se insertarán aquí -->
-                          </div>
-                  <!-- Row end -->
-                </div>
-              </div>
-              <!-- Card end -->
-        
+              
             </div>
-            
-            </div>
-          </div>
-            
           
             <div class="col-sm-6 col-12">
+                <!-- Card start -->
+                <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Client Retention Rate</div>
+                    </div>
+                    <div class="card-body">
+    
+                      <!-- Row start -->
+                      <div class="row gx-3">
+                        <div class="col-xxl-12">
+                          <div class="mb-3">
+                            <label class="form-label">Number of repeat clients *</label>
+                            <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of clients">
+                          </div>
+    
+                          <div class="mb-3">
+                            <label class="form-label">Total clients *</label>
+                            <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of clients">
+                          </div>
+                        </div>
+                       
+                      </div>
+    
+                      <!-- Row end -->
+    
+                      <!-- Form actions footer start -->
+                      <div class="form-actions-footer" style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-success" id="submitPregunta">Submit</button>
+                      </div>
+                      <!-- Form actions footer end -->
+    
+                    </div>
+                  </div>
+                  <!-- Card end -->
+
+            </div>
+          </div>
+          <!-- Row end -->
+
+
+
+
+
+          <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-sm-6 col-12">
+
               <!-- Card start -->
-              <div class="card" style="max-height: 1200px; overflow-y: auto;">
+              <div class="card">
                 <div class="card-header">
-                  <div class="card-title">Projects</div>
+                  <div class="card-title">Value Add</div>
                 </div>
                 <div class="card-body">
+
                   <!-- Row start -->
-                  <div class="row gx-3" >
-                        <div class="card-body">
-                          <div class="projects-container">
-                              <!-- Las tarjetas se insertarán aquí -->
-                          </div>
+                  <div class="row gx-3">
+                    <div class="col-xxl-12">
+                      <div class="mb-3">
+                        <label class="form-label">Innovation or Improvement Proposals *</label>
+                        <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of proposals">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Total projects completed *</label>
+                        <input type="text" class="form-control" id="inputPregunta" placeholder="Write the number of projects">
+                      </div>
+                    </div>
+                   
+                  </div>
+
                   <!-- Row end -->
+
+                  <!-- Form actions footer start -->
+                  <div class="form-actions-footer" style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-success" id="submitPregunta">Submit</button>
+                  </div>
+                  <!-- Form actions footer end -->
+
                 </div>
               </div>
               <!-- Card end -->
+              <br>
+              
+            </div>
+          
+            <div class="col-sm-6 col-12">
+                <!-- Card start -->
+                <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Budget Adherence</div>
+                    </div>
+                    <div class="card-body">
+                      <!-- Row start -->
+                      <div class="row gx-3">
+                        <div class="col-xxl-6">
+                          <div class="mb-3">
+                            <label class="form-label">Actual money spent*</label>
+                            <input type="text" class="form-control" id="inputPregunta" placeholder="Write the ammount here">
+                          </div>
+    
+                          <div class="mb-3">
+                            <label class="form-label">Amount Budgeted *</label>
+                            <input type="text" class="form-control" id="inputPregunta" placeholder="Write the ammount here">
+                          </div>
+                        </div>
+                       
+
+                        <div class="col-xxl-6">
+                            <div class="mb-3">
+                              <label class="form-label">Actual Invoiced Amount</A>*</label>
+                              <input type="text" class="form-control" id="inputPregunta" placeholder="Write the ammount here">
+                            </div>
+      
+                            <div class="mb-3">
+                              <label class="form-label">Forecasted Amount *</label>
+                              <input type="text" class="form-control" id="inputPregunta" placeholder="Write the ammount here">
+                            </div>
+                          </div>
+                      </div>
+    
+                      <!-- Row end -->
+    
+                      <!-- Form actions footer start -->
+                      <div class="form-actions-footer" style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-success" id="submitPregunta">Submit</button>
+                      </div>
+                      <!-- Form actions footer end -->
+    
+                    </div>
+                  </div>
+                  <!-- Card end -->
 
             </div>
-
-            
-
           </div>
           <!-- Row end -->
     </div>
 
 
-</div>
 
 
 
-    <!-- Modal para Editar Proyecto -->
-<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="editProjectModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProjectModalLabel">Edit Project</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="editProjectForm">
-          <div class="form-group">
-            <label for="editProjectName">Name</label>
-            <input type="text" class="form-control" id="editProjectName" placeholder="Enter project name">
-          </div>
-          <div class="form-group">
-            <label for="editProjectDiscipline">Discipline</label>
-            <select class="form-control" id="editProjectDiscipline">
-              <option value="Advanced Simulation">Advanced Simulation</option>
-              <option value="Advanced Programming">Advanced Programming</option>
-              <option value="CAD Support">CAD Support</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="editProjectFinishDate">Finish Date</label>
-            <input type="date" class="form-control" id="editProjectFinishDate">
-          </div>
-          <div class="form-group">
-            <label for="editProjectOnTime">On Time</label>
-            <select class="form-control" id="editProjectOnTime">
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="editProjectRevisions">Revisions</label>
-            <input type="text" class="form-control" id="editProjectRevisions" placeholder="Enter number of revisions">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveProjectChanges">Save changes</button>
-      </div>
+
+
+
+
     </div>
-  </div>
 </div>
 
 

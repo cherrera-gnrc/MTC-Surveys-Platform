@@ -26,7 +26,7 @@
               <a class="nav-link" href="index.html">Home</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="assets/survey_intro.html">Surveys</a>
+              <a class="nav-link" href="assets/controller_customer_survey.html">Surveys</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="assets/projects.html">Projects</a>
@@ -36,6 +36,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="assets/dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="assets/add_data.html">Add data</a>
             </li>
           </ul>
           
@@ -51,7 +54,7 @@
            <!-- Tarjetas -->
             <div class="row card-container mt-4 g-0">
                 <div class="card-wrapper">
-                    <div class="card" onclick="openAndClose('assets/survey_intro.html')">
+                    <div class="card" onclick="openAndClose('assets/controller_customer_survey.html')">
                         <img src="img/index_icons/survey_img.png" alt="Image 1">
                         <div class="card-title">Customize Satisfaction Surveys</div>
                     </div>
@@ -110,8 +113,10 @@
             const elementsToBlock = [
                 { selector: ".card[onclick*='responses.html']", type: "card" },
                 { selector: ".card[onclick*='dashboard.html']", type: "card" },
+                { selector: ".card[onclick*='add_data.html']", type: "card" },
                 { selector: ".nav-item a[href*='responses.html']", type: "navbar" },
-                { selector: ".nav-item a[href*='dashboard.html']", type: "navbar" }
+                { selector: ".nav-item a[href*='dashboard.html']", type: "navbar" },
+                { selector: ".nav-item a[href*='add_data.html']", type: "navbar" }
             ];
     
             elementsToBlock.forEach(({ selector, type }) => {

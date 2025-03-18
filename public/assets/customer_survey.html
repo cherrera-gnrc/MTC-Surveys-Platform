@@ -338,75 +338,102 @@
 
     // Función para recolectar respuestas y enviar el formulario
     async function submitSurvey(event) {
-        event.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
-        const submitButton = document.querySelector('button[type="submit"]');
-        // Añadir el loader
-        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...`;
-        submitButton.disabled = true;
-  
-        // Obtenemos las respuestas de las preguntas
-        const responses = {
-            name: getQueryParam("name") || "", // Obtenemos el nombre del proyecto de la URL
-            q1: document.querySelector('input[name="satisfaction"]:checked')?.value || "",
-            q2: document.querySelector('input[name="workQuality"]:checked')?.value || "",
-            q3: document.querySelector('input[name="timeliness"]:checked')?.value || "",
-            q4: document.querySelector('input[name="communication"]:checked')?.value || "",
-            q5: document.querySelector('input[name="responsiveness"]:checked')?.value || "",
-            q6: document.querySelector('input[name="technicalExpertise"]:checked')?.value || "",
-            q7: document.querySelector('input[name="problemSolving"]:checked')?.value || "",
-            q8: document.querySelector('input[name="recommendation"]:checked')?.value || "",
-            q9: document.getElementById("improvementSuggestions").value || "No comment registered",  // Si no hay texto, asignamos vacío
-            q10: document.getElementById("openFeedback").value || "No comment registered",  // Si no hay texto, asignamos vacío
-            q11: document.querySelector('input[name="recommendationLikelihood"]:checked')?.value || "",
-            discipline: document.getElementById("projectDiscipline").textContent.split(":")[1].trim(),
+    event.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
+    const submitButton = document.querySelector('button[type="submit"]');
+    // Añadir el loader
+    submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...`;
+    submitButton.disabled = true;
 
+    // Obtenemos las respuestas de las preguntas
+    const responses = {
+        name: getQueryParam("name") || "", // Obtenemos el nombre del proyecto de la URL
+        q1: document.querySelector('input[name="satisfaction"]:checked')?.value || "",
+        q2: document.querySelector('input[name="workQuality"]:checked')?.value || "",
+        q3: document.querySelector('input[name="timeliness"]:checked')?.value || "",
+        q4: document.querySelector('input[name="communication"]:checked')?.value || "",
+        q5: document.querySelector('input[name="responsiveness"]:checked')?.value || "",
+        q6: document.querySelector('input[name="technicalExpertise"]:checked')?.value || "",
+        q7: document.querySelector('input[name="problemSolving"]:checked')?.value || "",
+        q8: document.querySelector('input[name="recommendation"]:checked')?.value || "",
+        q9: document.getElementById("improvementSuggestions").value || "No comment registered",  // Si no hay texto, asignamos vacío
+        q10: document.getElementById("openFeedback").value || "No comment registered",  // Si no hay texto, asignamos vacío
+        q11: document.querySelector('input[name="recommendationLikelihood"]:checked')?.value || "",
+        discipline: document.getElementById("projectDiscipline").textContent.split(":")[1].trim(),
+    };
+
+    // Validación de que todas las preguntas, excepto la 9 y 10, estén respondidas
+    for (let i = 1; i <= 8; i++) {
+        if (!responses[`q${i}`]) {
+            alert(`Please answer question ${i}.`);
+            return; // Detenemos la ejecución si alguna pregunta no está respondida
+        }
+    }
+
+    // Calculamos la duración en minutos
+    const endTime = Date.now();
+    const duration = (endTime - startTime) / 60000; // Duración en minutos
+
+    // Añadimos la duración al objeto de respuestas
+    responses.time_duration = duration.toFixed(2); // Redondeamos a 2 decimales
+
+    // Imprimimos el objeto JSON en la consola
+    console.log("JSON para enviar:", JSON.stringify(responses));
+
+    // Enviar las respuestas al endpoint con CORS habilitado en el servidor
+    const endpoint = "https://addcustomerresponse-dcwslcbviq-uc.a.run.app";
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(responses),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al enviar los datos: ${response.statusText}`);
+        }
+     
+        const disciplineEmails = {
+            "Advanced Programming": ["carlos.herrera@generac.com", "alejandro.bargallo@generac.com", "refugio.maldonado@generac.com"],
+            "CAD Support": ["israel.becerril@generac.com","carlos.herrera@generac.com","alejandro.bargallo@generac.com", "refugio.maldonado@generac.com"],
+            "Advanced Simulation": ["leonardo.trejo@generac.com", "eduardo.hernandez@generac.com", "carlos.herrera@generac.com","alejandro.bargallo@generac.com", "refugio.maldonado@generac.com"]
         };
+        
+        console.log("Discipline:", responses.discipline);
 
-        // Validación de que todas las preguntas, excepto la 9 y 10, estén respondidas
-        for (let i = 1; i <= 8; i++) {
-            if (!responses[`q${i}`]) {
-                alert(`Please answer question ${i}.`);
-                return; // Detenemos la ejecución si alguna pregunta no está respondida
-            }
+        const emailsToSend = disciplineEmails[responses.discipline] || [];
+        console.log("Emails a los que se enviará:", emailsToSend);
+
+        for (const email of emailsToSend) {
+            await fetch('https://sendemail-dcwslcbviq-uc.a.run.app', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    to: email,
+                    subject: 'MTC Surveys Platform - New Customer Response',
+                    html: `<div><h3 style="font-family: 'Poppins', sans-serif;">Hey, you have a new response to one of your surveys!</h3></div>
+                            <div><h3  style="font-family: 'Poppins', sans-serif;">MTC Surveys Platform </h3></div>
+                    `
+                }),
+            });
+            console.log("Enviando correo a:", email);
         }
 
-        // Calculamos la duración en minutos
-        const endTime = Date.now();
-        const duration = (endTime - startTime) / 60000; // Duración en minutos
-
-        // Añadimos la duración al objeto de respuestas
-        responses.time_duration = duration.toFixed(2); // Redondeamos a 2 decimales
-
-        // Imprimimos el objeto JSON en la consola
-        console.log("JSON para enviar:", JSON.stringify(responses));
-
-        // Enviar las respuestas al endpoint con CORS habilitado en el servidor
-        const endpoint = "https://addcustomerresponse-dcwslcbviq-uc.a.run.app";
-
-        try {
-            const response = await fetch(endpoint, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(responses),
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error al enviar los datos: ${response.statusText}`);
-            }
-
-            // Redirigir después de enviar los datos
-            window.location.href = "https://mtc-surveys-platform.web.app/assets/thanks.html";
-        } catch (error) {
-            console.error("Error en la solicitud:", error);
-            alert("There was an error submitting the survey. Please try again.");
-        }finally {
+        // Redirigir después de enviar los datos
+        window.location.href = "https://mtc-surveys-platform.web.app/assets/thanks.html";
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+        alert("There was an error submitting the survey. Please try again.");
+    } finally {
         // Restablecer el botón
         submitButton.innerHTML = "Submit Survey";
         submitButton.disabled = false;
-      }
     }
+}
 
     // Asignamos el evento al botón de envío
     document.querySelector('button[type="submit"]').addEventListener("click", submitSurvey);
