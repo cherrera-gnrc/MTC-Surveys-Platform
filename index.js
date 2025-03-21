@@ -471,3 +471,246 @@ exports.deleteCustomerResponse = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+//addResourceUtilization Function
+exports.addResourceUtilization = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { billable_hours, total_hours } = req.body;
+
+      // Validación de campos obligatorios y numéricos
+      if (
+        billable_hours === undefined || total_hours === undefined ||
+        !Number.isFinite(parseFloat(billable_hours)) ||
+        !Number.isFinite(parseFloat(total_hours))
+      ) {
+        return res.status(400).json({
+          error: "Todos los campos son obligatorios y deben ser números.",
+        });
+      }
+
+      // Agregar el documento a Firestore
+      const docRef = await db.collection("resource_utilization").add({
+        billable_hours: parseFloat(billable_hours),
+        total_hours: parseFloat(total_hours),
+        created_at: admin.firestore.Timestamp.now(),
+      });
+
+      res.status(201).json({ message: "Data added successfully.", id: docRef.id });
+    } catch (error) {
+      console.error("Error adding data", error);
+      res.status(500).json({ error: "Couldn't add data." });
+    }
+  });
+});
+
+//addClientRetention Function
+exports.addClientRetention = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { rep_clients, total_clients } = req.body;
+
+      // Validación de campos obligatorios y numéricos
+      if (
+        rep_clients === undefined || total_clients === undefined ||
+        !Number.isFinite(parseFloat(rep_clients)) ||
+        !Number.isFinite(parseFloat(total_clients))
+      ) {
+        return res.status(400).json({
+          error: "Todos los campos son obligatorios y deben ser números.",
+        });
+      }
+
+      // Agregar el documento a Firestore
+      const docRef = await db.collection("client_retention").add({
+        rep_clients: parseFloat(rep_clients),
+        total_clients: parseFloat(total_clients),
+        created_at: admin.firestore.Timestamp.now(),
+      });
+
+      res.status(201).json({ message: "Data added successfully.", id: docRef.id });
+    } catch (error) {
+      console.error("Error adding data", error);
+      res.status(500).json({ error: "Couldn't add data." });
+    }
+  });
+});
+
+//addValueAdd Function
+exports.addValueAdd = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { proposals, projects_completed } = req.body;
+
+      // Validación de campos obligatorios y numéricos
+      if (
+        proposals === undefined || projects_completed === undefined ||
+        !Number.isFinite(parseFloat(proposals)) ||
+        !Number.isFinite(parseFloat(projects_completed))
+      ) {
+        return res.status(400).json({
+          error: "Todos los campos son obligatorios y deben ser números.",
+        });
+      }
+
+      // Agregar el documento a Firestore
+      const docRef = await db.collection("value_add").add({
+        proposals: parseFloat(proposals),
+        projects_completed: parseFloat(projects_completed),
+        created_at: admin.firestore.Timestamp.now(),
+      });
+
+      res.status(201).json({ message: "Data added successfully.", id: docRef.id });
+    } catch (error) {
+      console.error("Error adding data", error);
+      res.status(500).json({ error: "Couldn't add data." });
+    }
+  });
+});
+
+//addBudgetAdherence Function
+exports.addBudgetAdherence = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { money_spent, amount_budgeted, amount_invoiced, amount_forecasted } = req.body;
+
+      // Validación de campos obligatorios y numéricos
+      if (
+        money_spent === undefined || amount_budgeted === undefined ||
+        amount_invoiced === undefined || amount_forecasted === undefined ||
+        !Number.isFinite(parseFloat(money_spent)) ||
+        !Number.isFinite(parseFloat(amount_budgeted)) ||
+        !Number.isFinite(parseFloat(amount_invoiced)) ||
+        !Number.isFinite(parseFloat(amount_forecasted))
+      ) {
+        return res.status(400).json({
+          error: "Todos los campos son obligatorios y deben ser números.",
+        });
+      }
+
+      // Agregar el documento a Firestore
+      const docRef = await db.collection("budget_adherence").add({
+        money_spent: parseFloat(money_spent),
+        amount_budgeted: parseFloat(amount_budgeted),
+        amount_invoiced: parseFloat(amount_invoiced),
+        amount_forecasted: parseFloat(amount_forecasted),
+        created_at: admin.firestore.Timestamp.now(),
+      });
+
+      res.status(201).json({ message: "Data added successfully.", id: docRef.id });
+    } catch (error) {
+      console.error("Error adding data", error);
+      res.status(500).json({ error: "Couldn't add data." });
+    }
+  });
+});
+
+
+// GET Resource Utilization
+exports.getResourceUtilization = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await db.collection("resource_utilization").get();
+      const data = snapshot.docs.map(doc => {
+        const docData = doc.data();
+        return {
+          id: doc.id,
+          billable_hours: docData.billable_hours,
+          total_hours: docData.total_hours,
+          created_at: formatDate(docData.created_at)
+        };
+      });
+
+      res.status(200).json(data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      res.status(500).json({ error: "Couldn't fetch data." });
+    }
+  });
+});
+
+// GET Client Retention
+exports.getClientRetention = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await db.collection("client_retention").get();
+      const data = snapshot.docs.map(doc => {
+        const docData = doc.data();
+        return {
+          id: doc.id,
+          rep_clients: docData.rep_clients,
+          total_clients: docData.total_clients,
+          created_at: formatDate(docData.created_at)
+        };
+      });
+
+      res.status(200).json(data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      res.status(500).json({ error: "Couldn't fetch data." });
+    }
+  });
+});
+
+// GET Value Add
+exports.getValueAdd = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await db.collection("value_add").get();
+      const data = snapshot.docs.map(doc => {
+        const docData = doc.data();
+        return {
+          id: doc.id,
+          proposals: docData.proposals,
+          projects_completed: docData.projects_completed,
+          created_at: formatDate(docData.created_at)
+        };
+      });
+
+      res.status(200).json(data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      res.status(500).json({ error: "Couldn't fetch data." });
+    }
+  });
+});
+
+// GET Budget Adherence
+exports.getBudgetAdherence = functions.https.onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const snapshot = await db.collection("budget_adherence").get();
+      const data = snapshot.docs.map(doc => {
+        const docData = doc.data();
+        return {
+          id: doc.id,
+          money_spent: docData.money_spent,
+          amount_budgeted: docData.amount_budgeted,
+          amount_invoiced: docData.amount_invoiced,
+          amount_forecasted: docData.amount_forecasted,
+          created_at: formatDate(docData.created_at)
+        };
+      });
+
+      res.status(200).json(data);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      res.status(500).json({ error: "Couldn't fetch data." });
+    }
+  });
+});
+
+// Función para formatear timestamps de Firestore a "DD/MM/YYYY, hh:mm:ss a.m./p.m."
+const formatDate = (timestamp) => {
+  if (!timestamp || !timestamp.toDate) return null;
+  return timestamp.toDate().toLocaleString("es-MX", {
+    timeZone: "America/Mexico_City",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  });
+};
