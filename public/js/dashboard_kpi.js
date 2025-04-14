@@ -104,24 +104,46 @@ function loadKPIs(responses, projects) {
     const detractorPercentage = totalValid ? ((detractors / totalValid) * 100).toFixed(1) : 0;
     const neutralPercentage = totalValid ? ((neutrals / totalValid) * 100).toFixed(1) : 0;
     const nps = promoterPercentage - detractorPercentage;
+    let npsMsg ="";
+    if (nps > 20) {
+        // npsMsg va a ser los puntos arriba de la meta
+        document.getElementById('npsMsg').style.color = '#28a745'; 
+        npsMsg = `${(nps - 20).toFixed(1)}% Above the goal`;
+    }  else {
+        // npsMsg va a ser los puntos abajo de la meta
+        document.getElementById('npsMsg').style.color = '#dc3545'; 
+        npsMsg = `${(20 - nps).toFixed(1)}% Under the goal`;
+    }
+    
 
     const totalProjects = projects.length;
     const projectsWithRevisions = projects.filter((p) => p.revisions > 0).length;
     const projectsWithoutRevisions = totalProjects - projectsWithRevisions;
     const projectsWithoutRevisionsPercentage = (projectsWithoutRevisions / totalProjects) * 100;
+    let projectQualityMsg ="";
+    if (projectsWithoutRevisionsPercentage >= 80) {
+        //projectQualityMsg va a ser los puntos arriba de la meta
+        document.getElementById('projectQualityMsg').style.color = '#28a745'; 
+        projectQualityMsg = `${(projectsWithoutRevisionsPercentage - 80).toFixed(1)}% Above the goal`;
+        }  else {
+        //projectQualityMsg va a ser los puntos abajo de la meta
+        document.getElementById('projectQualityMsg').style.color = '#dc3545'; 
+        projectQualityMsg = `${(80 - projectsWithoutRevisionsPercentage).toFixed(1)}% Under the goal`;
+    }
+    document.getElementById('projectQualityMsg').textContent = projectQualityMsg;
 
     document.getElementById('project-quality').textContent = `${projectsWithoutRevisionsPercentage.toFixed(1)}%`;
-    document.getElementById('promoters').textContent = `${promoterPercentage}%`;
-    document.getElementById('neutrals').textContent = `${neutralPercentage}%`;
-    document.getElementById('detractors').textContent = `${detractorPercentage}%`;
+    document.getElementById('project-quality2').textContent = `${projectsWithoutRevisionsPercentage.toFixed(1)}%`;
     document.getElementById('nps-score').textContent = nps;
+    document.getElementById('nps-score2').textContent = nps;
+    document.getElementById('npsMsg').textContent = npsMsg;
 
     loadNPSIcons(promoterPercentage, detractorPercentage, neutralPercentage);
 }
 
 async function loadNewCharts(responses, projects) {
     const qualityData = {
-        labels: ["Without revisions", "With revisions"],
+        labels: ["Without reworks", "With reworks"],
         datasets: [{
             label: "Project Quality",
             data: [
@@ -206,18 +228,55 @@ async function loadAdditionalCharts() {
 
     // 🔹 Procesamiento de Resource Utilization
     const totalBillableHours = resourceData.reduce((sum, item) => sum + Number(item.billable_hours), 0);
+    console.log("totalBillableHours", totalBillableHours);
+    const totalProjectWorking = resourceData.reduce((sum, item) => sum + Number(item.project_working_time), 0);
+    console.log("totalProjectWorking", totalProjectWorking);
     const totalHours = resourceData.reduce((sum, item) => sum + Number(item.total_hours), 0);
     const resourceUtilization = totalHours > 0 ? (totalBillableHours / totalHours) * 100 : 0;
+    const efficiency = totalProjectWorking > 0 ? (totalProjectWorking / totalBillableHours) * 100 : 0;
+    document.getElementById('resour').textContent = `${resourceUtilization.toFixed(1)}%`;
+    document.getElementById('efficiency').textContent = `${efficiency.toFixed(1)}%`;
+    let resourceUtilizationMsg;
+    if (resourceUtilization >= 75) {
+        //resourceUtilizationMsg va a ser los puntos arriba de la meta
+        document.getElementById('resourceUtilizationMsg').style.color = '#28a745'; 
+        resourceUtilizationMsg = `${(resourceUtilization - 75).toFixed(1)}% Above the goal`;
+    }  else {
+        //resourceUtilizationMsg va a ser los puntos abajo de la meta
+        document.getElementById('resourceUtilizationMsg').style.color = '#dc3545';
+        resourceUtilizationMsg = `${(75 - resourceUtilization).toFixed(1)}% Under the goal`;
+    }
 
     // 🔹 Procesamiento de Client Retention
     const totalRepClients = clientRetentionData.reduce((sum, item) => sum + Number(item.rep_clients), 0);
     const totalClients = clientRetentionData.reduce((sum, item) => sum + Number(item.total_clients), 0);
     const clientRetention = totalClients > 0 ? (totalRepClients / totalClients) * 100 : 0;
+    
+    let clientRetentionMsg ="";
+    if (clientRetention >= 75) {
+        //clientRetentionMsg va a ser los puntos arriba de la meta
+        document.getElementById('clientRetentionMsg').style.color = '#28a745'; 
+        clientRetentionMsg = `${(clientRetention - 75).toFixed(1)}% Above the goal`;
+    }  else {
+        //clientRetentionMsg va a ser los puntos abajo de la meta
+        document.getElementById('clientRetentionMsg').style.color = '#dc3545';
+        clientRetentionMsg = `${(75 - clientRetention).toFixed(1)}% Under the goal`;
+    }
 
     // 🔹 Procesamiento de Value Add
     const totalProposals = valueAddData.reduce((sum, item) => sum + Number(item.proposals), 0);
     const totalCompletedProjects = valueAddData.reduce((sum, item) => sum + Number(item.projects_completed), 0);
     const valueAdd = totalCompletedProjects > 0 ? (totalProposals / totalCompletedProjects) * 100 : 0;
+    let valueAddMsg ="";
+    if (valueAdd >= 60) {
+        //valueAddMsg va a ser los puntos arriba de la meta
+        document.getElementById('valueAddMsg').style.color = '#28a745'; 
+        valueAddMsg = `${(valueAdd - 60).toFixed(0)}% Above the goal`;
+    }  else {
+        //valueAddMsg va a ser los puntos abajo de la meta
+        document.getElementById('valueAddMsg').style.color = '#dc3545';
+        valueAddMsg = `${(60 - valueAdd).toFixed(0)}% Under the goal`;
+    }
 
     // 🔹 Procesamiento de Budget Adherence & Accuracy
     const totalMoneySpent = budgetData.reduce((sum, item) => sum + Number(item.money_spent), 0);
@@ -227,20 +286,63 @@ async function loadAdditionalCharts() {
     const budgetAdherence = totalBudgeted > 0 ? (totalMoneySpent / totalBudgeted) * 100 : 0;
     const budgetAccuracy = totalForecasted > 0 ? (totalInvoiced / totalForecasted) * 100 : 0;
 
+     // Cálculo de desviación del presupuesto y facturación
+     const spendingDeviation = totalBudgeted > 0 ? ((totalMoneySpent - totalBudgeted) / totalBudgeted) * 100 : 0;
+     const invoicedDeviation = totalForecasted > 0 ? ((totalInvoiced - totalForecasted) / totalForecasted) * 100 : 0;
+
+    document.getElementById('spending-budget-value').textContent = `${spendingDeviation.toFixed(1)}%`;
+    document.getElementById('invoiced-budget-value').textContent = `${invoicedDeviation.toFixed(1)}%`;
+    if (spendingDeviation <= 0) {
+        document.getElementById('spending-budget-value').style.color = '#28a745'; // Verde
+    } else {
+        document.getElementById('spending-budget-value').style.color = '#dc3545'; // Rojo
+        }
+    if (invoicedDeviation >= 0) {
+        document.getElementById('invoiced-budget-value').style.color = '#28a745'; // Verde
+    } else {
+        document.getElementById('invoiced-budget-value').style.color = '#dc3545'; // Rojo
+        }
+
+    let budgetAdherenceMsg ="";
+    if (budgetAdherence >= 85) {
+        //budgetAdherenceMsg va a ser los puntos arriba de la meta
+        document.getElementById('budgetAdherenceMsg').style.color = '#28a745'; 
+        budgetAdherenceMsg = `${(budgetAdherence - 85).toFixed(1)}% Above the goal`;
+    }  else {
+        //budgetAdherenceMsg va a ser los puntos abajo de la meta
+        document.getElementById('budgetAdherenceMsg').style.color = '#dc3545';
+        budgetAdherenceMsg = `${(85 - budgetAdherence).toFixed(1)}% Under the goal`;
+    }
+    let budgetAccuracyMsg ="";
+    if (budgetAccuracy >= 85) {
+        //budgetAccuracyMsg va a ser los puntos arriba de la meta
+        document.getElementById('budgetAccuracyMsg').style.color = '#28a745'; 
+        budgetAccuracyMsg = `${(budgetAccuracy - 85).toFixed(1)}% Above the goal`;
+    }  else {
+        //budgetAccuracyMsg va a ser los puntos abajo de la meta
+        document.getElementById('budgetAccuracyMsg').style.color = '#dc3545';
+        budgetAccuracyMsg = `${(85 - budgetAccuracy).toFixed(1)}% Under the goal`;
+    }
+    
   
 
     // 🔹 Mostrar valores debajo de cada gráfico
-    document.getElementById("resource-utilization-value").innerText = `Resource Utilization: ${resourceUtilization.toFixed(2)}%`;
-    document.getElementById("client-retention-value").innerText = `Client Retention: ${clientRetention.toFixed(2)}%`;
-    document.getElementById("value-add-value").innerText = `Value Add: ${valueAdd.toFixed(2)}%`;
-    document.getElementById("budget-adherence-value").innerText = `Budget Adherence: ${budgetAdherence.toFixed(2)}%`;
-    document.getElementById("budget-accuracy-value").innerText = `Budget Accuracy: ${budgetAccuracy.toFixed(2)}%`;
+    document.getElementById("resource-utilization-value").innerText = `${resourceUtilization.toFixed(1)}%`;
+    document.getElementById("resourceUtilizationMsg").innerText = `${resourceUtilizationMsg}`;
+    document.getElementById("client-retention-value").innerText = `${clientRetention.toFixed(1)}%`;
+    document.getElementById("clientRetentionMsg").innerText = `${clientRetentionMsg}`;
+    document.getElementById("value-add-value").innerText = `${valueAdd.toFixed(1)}%`;
+    document.getElementById("valueAddMsg").innerText = `${valueAddMsg}`;
+    document.getElementById("budget-adherence-value").innerText = `${budgetAdherence.toFixed(1)}%`;
+    document.getElementById("budgetAdherenceMsg").innerText = `${budgetAdherenceMsg}`;
+    document.getElementById("budget-accuracy-value").innerText = `${budgetAccuracy.toFixed(1)}%`;
+    document.getElementById("budgetAccuracyMsg").innerText = `${budgetAccuracyMsg}`;
 
     // 🔹 Gráfica de Resource Utilization (Doughnut)
     new Chart(document.getElementById("resource-utilization-chart"), {
         type: "doughnut",
         data: {
-            labels: ["Billable Hours", "Non-Billable Hours"],
+            labels: ["Project Hours", "Non-Project Hours"],
             datasets: [{
                 data: [resourceUtilization, 100 - resourceUtilization],
                 backgroundColor: ["#007bff", "#e0e0e0"]
@@ -255,6 +357,7 @@ async function loadAdditionalCharts() {
             }
         }
     });
+
 
     // 🔹 Gráfica de Client Retention (Doughnut)
     new Chart(document.getElementById("client-retention-chart"), {
@@ -297,31 +400,62 @@ async function loadAdditionalCharts() {
         }
     });
 
-    // 🔹 Gráfica de Budget Adherence & Accuracy (Barras)
-    new Chart(document.getElementById("budget-chart"), {
-        type: "bar",
-        data: {
-            labels: ["Budget Adherence", "Budget Accuracy"],
-            datasets: [{
-                label: "Percentage",
-                data: [budgetAdherence, budgetAccuracy],
-                backgroundColor: ["#17a2b8", "#ff5733"],
-                borderRadius: 10
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                title: { display: true, text: "Budget Adherence & Accuracy ", font: { family: "Poppins", weight: "bold", size: 18}, align: "start"}
+  // Configuración de la gráfica de barras separadas
+new Chart(document.getElementById("budget-chart"), {
+    type: "bar",
+    data: {
+        labels: ["Budget Comparison"],
+        datasets: [
+            {
+                label: "Spending Budget",
+                data: [spendingDeviation],
+                backgroundColor: spendingDeviation >= 0 ? "#28a745" : "#dc3545"
             },
-            scales: {
-                x: { ticks: { font: { family: "Poppins" } } },
-                y: { ticks: { font: { family: "Poppins" } } }
+            {
+                label: "Invoiced Budget",
+                data: [invoicedDeviation],
+                backgroundColor: invoicedDeviation >= 0 ? "#17a2b8" : "#ff5733"
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        borderRadius: 10,
+        plugins: {
+            legend: { display: true },
+            title: { 
+                display: true, 
+                text: "Budget", 
+                font: { family: "Poppins", weight: "bold", size: 18 }, 
+                align: "start"
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(2)}%`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: false,
+                ticks: { font: { family: "Poppins" } }
+            },
+            y: {
+                stacked: false,
+                beginAtZero: true,
+                ticks: { 
+                    font: { family: "Poppins" }, 
+                    callback: value => `${value.toFixed(2)}%`
+                }
             }
         }
-    });
+    }
+});
+
+
 }
 
 document.addEventListener("DOMContentLoaded", loadAdditionalCharts);
@@ -333,10 +467,29 @@ function updateDashboard(responses, projects) {
     const satisfaction = calculateCustomerSatisfaction(responses);
     document.getElementById('customer-satisfaction').textContent = `${satisfaction}%`;
     document.getElementById('stars').innerHTML = displayStars(satisfaction);
-    document.getElementById('satisfaction-goal').textContent = satisfaction >= 70 ? "Above Goal" : "Below Goal";
+
+    //aplicar colores verde si es avove goal o rojo si es below goal
+    if (satisfaction >= 70) {
+        document.getElementById('satisfaction-goal').style.color = '#28a745'; // Verde
+    } else {
+        document.getElementById('satisfaction-goal').style.color = '#dc3545'; // Rojo
+    }
+    document.getElementById('satisfaction-goal').textContent = satisfaction >= 70 ? "Above the goal" : "Below the goal";
 
     const timelyCompletion = calculateTimelyCompletion(projects);
+    let timelyCompletionMsg ="";
+    if (timelyCompletion >= 80) {
+        // timelyCompletionMsg va a ser los puntos arriba de la meta
+        document.getElementById('timelyCompletionMsg').style.color = '#28a745';
+        timelyCompletionMsg = `${(timelyCompletion - 80).toFixed(1)}% Above the goal`;
+    }  else {
+        // timelyCompletionMsg va a ser los puntos abajo de la meta
+        document.getElementById('timelyCompletionMsg').style.color = '#dc3545';
+        timelyCompletionMsg = `${(80 - timelyCompletion).toFixed(1)}% Under the goal`;
+    }
     document.getElementById('timely-completion').textContent = `${timelyCompletion}%`;
+    document.getElementById('timely-comp').textContent = `${timelyCompletion}%`;
+    document.getElementById('timelyCompletionMsg').innerText = `${timelyCompletionMsg}`;
 
     const ctx = document.getElementById("timely-completion-chart").getContext("2d");
     new Chart(ctx, {
@@ -357,9 +510,6 @@ function updateDashboard(responses, projects) {
             }
         }
     });
-
-    const delayedProjects = getDelayedProjects(projects);
-    document.getElementById('delayed-projects').innerHTML = delayedProjects.map(p => `<li>${p.name}</li>`).join("");
 }
 
 function setCanvasBackgroundWhite() {
@@ -419,4 +569,3 @@ async function init() {
 }
 
 init();
-

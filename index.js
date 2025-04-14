@@ -476,13 +476,14 @@ exports.deleteCustomerResponse = functions.https.onRequest((req, res) => {
 exports.addResourceUtilization = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     try {
-      const { billable_hours, total_hours } = req.body;
+      const { billable_hours, total_hours, project_working_time } = req.body;
 
       // Validación de campos obligatorios y numéricos
       if (
-        billable_hours === undefined || total_hours === undefined ||
+        billable_hours === undefined || total_hours === undefined || project_working_time === undefined ||
         !Number.isFinite(parseFloat(billable_hours)) ||
-        !Number.isFinite(parseFloat(total_hours))
+        !Number.isFinite(parseFloat(total_hours)) ||
+        !Number.isFinite(parseFloat(project_working_time))
       ) {
         return res.status(400).json({
           error: "Todos los campos son obligatorios y deben ser números.",
@@ -493,6 +494,7 @@ exports.addResourceUtilization = functions.https.onRequest((req, res) => {
       const docRef = await db.collection("resource_utilization").add({
         billable_hours: parseFloat(billable_hours),
         total_hours: parseFloat(total_hours),
+        project_working_time: parseFloat(project_working_time),
         created_at: admin.firestore.Timestamp.now(),
       });
 
@@ -617,6 +619,7 @@ exports.getResourceUtilization = functions.https.onRequest(async (req, res) => {
           id: doc.id,
           billable_hours: docData.billable_hours,
           total_hours: docData.total_hours,
+          project_working_time: docData.project_working_time,
           created_at: formatDate(docData.created_at)
         };
       });

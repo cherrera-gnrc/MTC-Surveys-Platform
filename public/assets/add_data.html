@@ -56,7 +56,7 @@
               <!-- Card start -->
               <div class="card">
                 <div class="card-header">
-                  <div class="card-title">Resource utilization</div>
+                  <div class="card-title">Utilization and Efficiency</div>
                 </div>
                 <div class="card-body">
 
@@ -64,13 +64,18 @@
                   <div class="row gx-3">
                     <div class="col-xxl-12">
                       <div class="mb-3">
-                        <label class="form-label">Billable hours *</label>
+                        <label class="form-label">Project Hours *</label>
                         <input type="text" class="form-control" id="billable_hours" placeholder="Write the number of hours here">
                       </div>
 
                       <div class="mb-3">
-                        <label class="form-label">Total hours worked *</label>
+                        <label class="form-label">Scheduled Time *</label>
                         <input type="text" class="form-control" id="total_hours" placeholder="Write the number of hours here">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Project Working Time *</label>
+                        <input type="text" class="form-control" id="project_working_time" placeholder="Write the number of hours here">
                       </div>
                     </div>
                    
@@ -188,12 +193,12 @@
                       <div class="row gx-3">
                         <div class="col-xxl-6">
                           <div class="mb-3">
-                            <label class="form-label">Actual money spent*</label>
+                            <label class="form-label">YTD Spending*</label>
                             <input type="text" class="form-control" id="money_spent" placeholder="Write the ammount here">
                           </div>
     
                           <div class="mb-3">
-                            <label class="form-label">Amount Budgeted *</label>
+                            <label class="form-label">YTD Spending Budget *</label>
                             <input type="text" class="form-control" id="amount_budgeted" placeholder="Write the ammount here">
                           </div>
                         </div>
@@ -201,12 +206,12 @@
 
                         <div class="col-xxl-6">
                             <div class="mb-3">
-                              <label class="form-label">Actual Invoiced Amount</A>*</label>
+                              <label class="form-label">YTD Invoiced</A>*</label>
                               <input type="text" class="form-control" id="amount_invoiced" placeholder="Write the ammount here">
                             </div>
       
                             <div class="mb-3">
-                              <label class="form-label">Forecasted Amount *</label>
+                              <label class="form-label">YTD Invoiced Forecast*</label>
                               <input type="text" class="form-control" id="amount_forecasted" placeholder="Write the ammount here">
                             </div>
                           </div>
@@ -232,9 +237,139 @@
 
 
     </div>
+
+    <div class="container">
+      <h1>Data History</h1>
+      <p>Here is a list of the latests registers.</p>
+      
+      <div class="row gx-3">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Budget Adherence</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="budgetAdherenceTable"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <br>
+      
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Client Retention</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="clientRetentionTable"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Utilization and Efficiency</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="resourceUtilizationTable"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <br>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Value Add</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="valueAddTable"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
 </div>
 
+<script>
+  // Función para obtener datos desde el endpoint
+  async function fetchData(url) {
+    const response = await fetch(url);
+    return await response.json();
+  }
 
+  // Función para llenar las tablas con los datos obtenidos
+  function populateTable(tableId, data, headers) {
+    const table = document.getElementById(tableId);
+    
+    // Crear encabezado de la tabla
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.innerText = headerText;
+      headerRow.appendChild(th);
+    });
+
+    // Crear cuerpo de la tabla
+    const tbody = table.createTBody();
+
+    // Iterar sobre los objetos dentro del array y añadirlos a la tabla
+    data.forEach(item => {
+      const row = tbody.insertRow();
+      // Asegurarse de que solo se añaden los valores relevantes
+      Object.keys(item).forEach(key => {
+        if (key !== 'id') {  // No mostrar el ID
+          const td = row.insertCell();
+          td.innerText = item[key]; // Insertar el valor correspondiente
+        }
+      });
+    });
+  }
+
+  // Función para cargar todos los datos
+  async function loadData() {
+    // Endpoints
+    const endpoints = {
+      resourceUtilization: 'https://getresourceutilization-dcwslcbviq-uc.a.run.app',
+      clientRetention: 'https://getclientretention-dcwslcbviq-uc.a.run.app',
+      valueAdd: 'https://getvalueadd-dcwslcbviq-uc.a.run.app',
+      budgetAdherence: 'https://getbudgetadherence-dcwslcbviq-uc.a.run.app'
+    };
+
+    // Cargar datos y llenar tablas
+    try {
+      // Obtener datos de cada endpoint
+      const resourceUtilizationData = await fetchData(endpoints.resourceUtilization);
+      const clientRetentionData = await fetchData(endpoints.clientRetention);
+      const valueAddData = await fetchData(endpoints.valueAdd);
+      const budgetAdherenceData = await fetchData(endpoints.budgetAdherence);
+
+      // Llenar las tablas con los datos
+      populateTable('resourceUtilizationTable', resourceUtilizationData, ['Project Hours', 'Scheduled Time', 'Project Working Time', 'Created At']);
+      populateTable('clientRetentionTable', clientRetentionData, ['Rep Clients', 'Total Clients', 'Created At']);
+      populateTable('valueAddTable', valueAddData, ['Proposals', 'Projects Completed', 'Created At']);
+      populateTable('budgetAdherenceTable', budgetAdherenceData, ['Money Spent', 'Amount Budgeted', 'Amount Invoiced', 'Amount Forecasted', 'Created At']);
+      
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
+
+  // Llamar a la función para cargar los datos cuando la página se haya cargado
+  document.addEventListener('DOMContentLoaded', loadData);
+</script>
 
 <script>
   // Resource Utilization
@@ -242,7 +377,11 @@
     const button = document.getElementById("submitResourceUtilization");
     const billable_hours = document.getElementById("billable_hours");
     const total_hours = document.getElementById("total_hours");
-    const data = { billable_hours: billable_hours.value, total_hours: total_hours.value };
+    const project_working_time = document.getElementById("project_working_time");
+    const data = { 
+      billable_hours: billable_hours.value, 
+      total_hours: total_hours.value, 
+      project_working_time: project_working_time.value };
 
     // Add spinner and disable button
     button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
@@ -272,6 +411,7 @@
         // Clear input fields
         billable_hours.value = "";
         total_hours.value = "";
+        project_working_time.value = "";
       });
   });
 

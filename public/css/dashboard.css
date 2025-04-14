@@ -115,6 +115,28 @@
   .export-btn:hover {
     background-color: #0056b3;
   }
+  .grapgh-text{
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #393939;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+
+  .card.kpi {
+    min-height: 100vh; /* Hace que la tarjeta tenga al menos el alto de la pantalla */
+    height: auto; /* Permite que crezca con el contenido */
+    display: flex;
+    flex-direction: column;
+}
+
+.container.kpi {
+    flex-grow: 1; /* Permite que la tarjeta crezca con su contenido */
+}
+
 
 
    /* Nuevos estilos para dispositivos móviles */
